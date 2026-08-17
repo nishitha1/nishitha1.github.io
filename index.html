@@ -2,78 +2,838 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Nishitha Suvarna — Software Engineer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nishitha Suvarna — Software Engineer</title>
+  <meta name="description"
+    content="Software engineer working on real-time streaming pipelines, ML inference infrastructure, and customer-facing product surfaces at Amazon.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'unsafe-inline'; img-src 'self' data:; form-action 'none'; base-uri 'none'; frame-ancestors 'none'">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --paper: #E8EDE8;
+      --paper-lift: #F3F6F2;
+      --ink: #10201E;
+      --ink-soft: #4C5F5B;
+      /* 5.65:1 on paper */
+      --ink-faint: #55677C;
+      /* 4.84:1 on paper */
+      --rule: #C7D2C9;
+      --gold: #8A5F1E;
+      /* 4.69:1 on paper */
+
+      --display: "Bricolage Grotesque", system-ui, sans-serif;
+      --body: "Instrument Sans", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+      --pad: clamp(1.25rem, 5vw, 5rem);
+      --maxw: 68rem;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin-inline: auto;
+      padding-inline: var(--pad);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* ---------- masthead ---------- */
+    .masthead {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding-block: 1.75rem 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .masthead nav {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .masthead a {
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .masthead a:hover {
+      color: var(--gold);
+    }
+
+    /* ---------- hero ---------- */
+    .hero {
+      padding-block: clamp(2.25rem, 6vw, 4rem) 0;
+    }
+
+    .hero h1 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(2rem, 6.2vw, 4.25rem);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .hero h1 .surname {
+      display: inline;
+      margin-left: 0.24em;
+      color: var(--ink-soft);
+    }
+
+    .hero .tagline {
+      margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+      max-width: 38ch;
+      font-size: clamp(1.125rem, 1rem + 0.6vw, 1.4rem);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+    }
+
+    .hero .tagline em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    /* ---------- signature: the stream ---------- */
+    .stream {
+      margin-top: clamp(2.5rem, 6vw, 4rem);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+    }
+
+    .stream canvas {
+      display: block;
+      width: 100%;
+      height: 150px;
+    }
+
+    @media (max-width:640px) {
+      .stream canvas {
+        height: 100px;
+      }
+    }
+
+    .stream .legend {
+      position: absolute;
+      left: 0;
+      bottom: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      pointer-events: none;
+    }
+
+    /* ---------- sections ---------- */
+    section {
+      padding-block: clamp(3.5rem, 8vw, 6rem);
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 0 0 2.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .eyebrow::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .prose {
+      max-width: 62ch;
+    }
+
+    .prose p {
+      margin: 0 0 1.25rem;
+      font-size: 1.0625rem;
+      line-height: 1.72;
+    }
+
+    .prose p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ---------- work ---------- */
+    .role {
+      display: grid;
+      grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+      gap: clamp(1rem, 4vw, 3rem);
+      padding-block: 2.25rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .role:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .role .when {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-faint);
+      padding-top: 0.5rem;
+    }
+
+    .role h3 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: clamp(1.35rem, 1.2rem + 0.6vw, 1.7rem);
+      letter-spacing: -0.018em;
+      line-height: 1.2;
+      margin: 0 0 0.2rem;
+    }
+
+    .role .org {
+      font-size: 0.98rem;
+      color: var(--ink-soft);
+      margin: 0 0 1.1rem;
+    }
+
+    .role .context {
+      font-size: 0.94rem;
+      color: var(--ink-faint);
+      line-height: 1.55;
+      margin: -0.8rem 0 1.2rem;
+      max-width: 54ch;
+    }
+
+    .role ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .role li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: 0.8rem;
+      color: var(--ink-soft);
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+
+    .role li:last-child {
+      margin-bottom: 0;
+    }
+
+    .role li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.68em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--rule);
+    }
+
+    @media (max-width:700px) {
+      .role {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+      }
+
+      .role .when {
+        padding-top: 0;
+      }
+    }
+
+    /* ---------- practice cards ---------- */
+    .practice {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .practice article {
+      background: var(--paper-lift);
+      padding: 1.75rem 1.5rem;
+    }
+
+    .practice h3 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 1.15rem;
+      letter-spacing: -0.012em;
+      margin: 0 0 0.9rem;
+    }
+
+    .practice ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .practice li {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      padding-block: 0.45rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .practice li:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    /* ---------- toolkit ---------- */
+    .kit {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .kit .row {
+      display: grid;
+      grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr);
+      gap: clamp(0.75rem, 3vw, 2rem);
+      align-items: baseline;
+    }
+
+    .kit .label {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .kit .items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem 0.5rem;
+    }
+
+    .kit .items span {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      padding: 0.3rem 0.65rem;
+      background: var(--paper-lift);
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      color: var(--ink-soft);
+    }
+
+    @media (max-width:640px) {
+      .kit .row {
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
+      }
+    }
+
+    /* ---------- education ---------- */
+    .edu .item {
+      display: grid;
+      grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+      gap: clamp(1rem, 4vw, 3rem);
+      padding-block: 1.4rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .edu .item:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .edu .when {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+    }
+
+    .edu h3 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 1.15rem;
+      letter-spacing: -0.012em;
+      margin: 0 0 0.25rem;
+    }
+
+    .edu p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+    }
+
+    .edu .paper {
+      text-decoration: none;
+      background-image: linear-gradient(var(--gold), var(--gold));
+      background-size: 100% 1px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      padding-bottom: 1px;
+      transition: color .2s ease;
+    }
+
+    .edu .paper:hover {
+      color: var(--gold);
+    }
+
+    @media (max-width:700px) {
+      .edu .item {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+      }
+    }
+
+    /* ---------- contact ---------- */
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .links a {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      padding: 0.7rem 1.2rem;
+      border: 1px solid var(--ink);
+      border-radius: 3px;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    .links a:hover,
+    .links a:focus-visible {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    footer {
+      padding-block: 2.5rem 3rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      border-top: 1px solid var(--rule);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="wrap">
-        <header class="masthead">
-            <span>Nishitha Suvarna</span>
-            <nav>
-                <a href="#about">About</a>
-                <a href="#work">Work</a>
-                <a href="#toolkit">Toolkit</a>
-                <a href="#contact">Contact</a>
-            </nav>
-        </header>
 
-        <section id="about"></section>
-        <p>About</p>
+  <div class="wrap">
+    <header class="masthead">
+      <span>Nishitha Suvarna</span>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#toolkit">Toolkit</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <div class="hero">
+      <h1>Nishitha<span class="surname">Suvarna</span></h1>
+      <p class="tagline">
+        Software engineer building <em>real-time streaming pipelines</em>, ML inference
+        infrastructure, and the product surfaces they sit behind.
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stream">
+      <canvas id="stream" aria-hidden="true"></canvas>
+      <span class="legend">events in · window closes · one record out</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <section id="about">
+      <h2 class="eyebrow">About</h2>
+      <div class="prose">
         <p>
-            I'm a software engineer at Amazon, where I work on systems that vend promotional content and power the
-            backend for Prime Video Clips, the short-form video feed in the mobile apps.
+          I'm a software engineer at Amazon, where I work on systems that vend promotional content and
+          power the backend for Prime Video Clips, the short-form video feed in the mobile apps.
         </p>
         <p>
-            Four years in, my work has centered on the layer where infrastructure meets
-            something a customer actually sees. I migrated a real-time aggregation pipeline
-            from Amazon Kinesis Data Analytics for SQL Applications to Kinesis Data Analytics for Apache Flink and ran
-            the production cutover with
-            zero data loss. I implemented chaos engineering tests for Prime Video Clips using Gremlin
-            fault injection and JUnit 5, validating steady state under injected latency and
-            wiring the tests into CI/CD as automated approval gates. Earlier, in Retail, I
-            onboarded a containerized computer vision model to SageMaker Batch Transform
-            and built the search and filtering experience on Amazon Paint Finder.
+          Four years in, my work has centered on the layer where infrastructure meets
+          something a customer actually sees. I migrated a real-time aggregation pipeline
+          from Amazon Kinesis Data Analytics for SQL Applications to Kinesis Data Analytics for Apache Flink and ran
+          the production cutover with
+          zero data loss. I implemented chaos engineering tests for Prime Video Clips using Gremlin
+          fault injection and JUnit 5, validating steady state under injected latency and
+          wiring the tests into CI/CD as automated approval gates. Earlier, in Retail, I
+          onboarded a containerized computer vision model to SageMaker Batch Transform
+          and built the search and filtering experience on Amazon Paint Finder.
         </p>
         <p>
-            The projects I've enjoyed most are the ones where I had to learn the stack as I
-            went. Flink, Scala, Gremlin, and an internal query language (Datapath) were all new to me
-            when the work called for them.
+          The projects I've enjoyed most are the ones where I had to learn the stack as I
+          went. Flink, Scala, Gremlin, and an internal query language (Datapath) were all new to me
+          when the work called for them.
         </p>
         <p>
-            I build with accessibility as a baseline. At Amazon Retail, that shaped how I built the widgets and
-            filtering experience for the Amazon Paint Finder, Exterior Paint
-            Finder, and Flooring Finder pages, down to catching a text overflow bug in German before it
-            reached customers. I rigorously test my own logic through bug bashes and UAT sessions prior to launch.
-            When production issues arise, I document the fixes so future on-call engineers are set up for success.
-            I’m also passionate about engineering culture, having served as both an official intern mentor and an
-            onboarding buddy for newer developers.
+          I build with accessibility as a baseline. At Amazon Retail, that shaped how I built the widgets and
+          filtering experience for the Amazon Paint Finder, Exterior Paint
+          Finder, and Flooring Finder pages, down to catching a text overflow bug in German before it
+          reached customers. I rigorously test my own logic through bug bashes and UAT sessions prior to launch.
+          When production issues arise, I document the fixes so future on-call engineers are set up for success.
+          I’m also passionate about engineering culture, having served as both an official intern mentor and an
+          onboarding buddy for newer developers.
         </p>
         <p>
-            I earned my master's degree from UC Irvine, where I conducted NLP research at the LaLA Lab.
-            My undergraduate research on Visual Gesture Recognition was published at IEEE ICICCS, I continue to explore
-            advancements in machine learning in my personal time.
+          I earned my master's degree from UC Irvine, where I conducted NLP research at the LaLA Lab.
+          My undergraduate research on Visual Gesture Recognition was published at IEEE ICICCS, I continue to explore
+          advancements in machine learning in my personal time.
         </p>
-        </section>
+      </div>
+    </section>
 
-        <section id="work">
-            <p>Work</p>
-        </section>
+    <section id="work">
+      <h2 class="eyebrow">Work</h2>
 
+      <div class="role">
+        <div class="when">2025 &ndash; Present</div>
+        <div>
+          <h3>Software Development Engineer</h3>
+          <p class="org">Prime Video &middot; Amazon</p>
+          <p class="context">Backend for Prime Video Clips, the short-form video feed on mobile, and the systems that
+            vend promotional content across the service.</p>
+        </div>
+      </div>
 
-        <section id="toolkit">
-            <p>Toolkit</p>
-        </section>
+      <div class="role">
+        <div class="when">2022 &ndash; 2025</div>
+        <div>
+          <h3>Software Development Engineer</h3>
+          <p class="org">Retail &middot; Amazon</p>
+          <p class="context">ML inference workflows for automated catalog image quality, and customer-facing discovery
+            experiences on Amazon's home improvement pages.</p>
+        </div>
+      </div>
 
-        <section id="contact">
-            <p>Contact</p>
-        </section>
+      <div class="role">
+        <div class="when">2021 &ndash; 2022</div>
+        <div>
+          <h3>Research Assistant</h3>
+          <p class="org">LaLA Lab &middot; University of California, Irvine</p>
+          <ul>
+            <li>Applied NLP techniques to extract linguistic features from collaborative problem-solving conversations
+              and analyzed their relationship with team performance across educational contexts.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
+    <section id="practice">
+      <h2 class="eyebrow">What I build</h2>
+      <div class="practice">
+        <article>
+          <h3>Backend &amp; infrastructure</h3>
+          <ul>
+            <li>Real-time stream processing and event-driven pipelines</li>
+            <li>Infrastructure as code with AWS CDK</li>
+            <li>Service migrations and legacy decommission</li>
+            <li>Chaos engineering and CI/CD reliability gates</li>
+          </ul>
+        </article>
+        <article>
+          <h3>ML systems</h3>
+          <ul>
+            <li>Containerized model deployment and batch inference</li>
+            <li>Data contracts across science and platform teams</li>
+            <li>Integration testing for inference pipelines</li>
+            <li>Automated data selection for model input</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Frontend &amp; product</h3>
+          <ul>
+            <li>Widgets for high-traffic commerce surfaces</li>
+            <li>Search and filtering UX over live backend APIs</li>
+            <li>Accessible UI as a build requirement</li>
+            <li>Localization and cross-locale UX validation</li>
+            <li>Bug bashes and UAT sessions before launch</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
+    <section id="toolkit">
+      <h2 class="eyebrow">Toolkit</h2>
+      <div class="kit">
+        <div class="row">
+          <span class="label">Languages</span>
+          <div class="items">
+            <span>Java</span><span>TypeScript</span><span>Python</span><span>Scala</span><span>SQL</span><span>JavaScript</span>
+          </div>
+        </div>
+        <div class="row">
+          <span class="label">Streaming &amp; data</span>
+          <div class="items">
+            <span>Apache Flink</span><span>Kinesis</span><span>DynamoDB</span><span>Glue</span><span>Athena</span>
+          </div>
+        </div>
+        <div class="row">
+          <span class="label">Cloud &amp; infra</span>
+          <div class="items">
+            <span>AWS CDK</span><span>Lambda</span><span>Step Functions</span><span>API
+              Gateway</span><span>S3</span><span>Docker</span><span>CI/CD</span>
+          </div>
+        </div>
+        <div class="row">
+          <span class="label">ML</span>
+          <div class="items">
+            <span>SageMaker</span><span>PyTorch</span><span>TensorFlow</span><span>Keras</span><span>OpenCV</span>
+          </div>
+        </div>
+        <div class="row">
+          <span class="label">Reliability</span>
+          <div class="items">
+            <span>JUnit 5</span><span>Gremlin</span><span>CloudWatch</span><span>Integration testing</span>
+          </div>
+        </div>
+        <div class="row">
+          <span class="label">Web</span>
+          <div class="items">
+            <span>HTML5</span><span>CSS3</span><span>REST APIs</span><span>Accessible
+              UI</span><span>ESLint</span><span>Figma</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section id="education">
+      <h2 class="eyebrow">Education</h2>
+      <div class="edu">
+        <div class="item">
+          <span class="when">2021</span>
+          <div>
+            <h3>M.S. Computer Science</h3>
+            <p>University of California, Irvine</p>
+          </div>
+        </div>
+        <div class="item">
+          <span class="when">2018</span>
+          <div>
+            <h3>B.E. Computer Engineering</h3>
+            <p>University of Mumbai</p>
+          </div>
+        </div>
+        <div class="item">
+          <span class="when">2018</span>
+          <div>
+            <!-- <h3><a class="paper" href="" target="_blank"
+                rel="noopener noreferrer">Visual Gesture Recognition for Text Writing in Air</a></h3> -->
+            <h3>Visual Gesture Recognition for Text Writing in Air</h3>
+            <p>Published at IEEE ICICCS</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section id="contact">
+      <h2 class="eyebrow">Contact</h2>
+      <div class="links">
+        <a href="https://www.linkedin.com/in/nishitha-suvarna" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/nishitha1" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="wrap">
+    <footer>
+      <span>Nishitha Suvarna &middot; Seattle, WA</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById('stream');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const css = getComputedStyle(document.documentElement);
+      const SOFT = css.getPropertyValue('--ink-faint').trim() || '#55677C';
+      const GOLD = css.getPropertyValue('--gold').trim() || '#8A5F1E';
+      const RULE = css.getPropertyValue('--rule').trim() || '#C7D2C9';
+
+      let W = 0, H = 0, dpr = 1, gate = 0;
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const r = canvas.getBoundingClientRect();
+        W = r.width; H = r.height;
+        canvas.width = Math.round(W * dpr);
+        canvas.height = Math.round(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        gate = W * 0.6;
+      }
+
+      const events = [];
+      const records = [];
+      let caught = 0;
+      let sinceClose = 0;
+
+      function lane() {
+        const spread = H * 0.34;
+        return H / 2 + (Math.random() + Math.random() + Math.random() - 1.5) * spread;
+      }
+
+      function spawn() {
+        events.push({x: -6, y: lane(), v: 0.5 + Math.random() * 0.9, r: 1.4 + Math.random() * 1.1});
+      }
+
+      function seed() {
+        events.length = 0; records.length = 0; caught = 0; sinceClose = 0;
+        for (let i = 0; i < 46; i++) {
+          events.push({x: Math.random() * gate, y: lane(), v: 0.5 + Math.random() * 0.9, r: 1.4 + Math.random() * 1.1});
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.strokeStyle = RULE;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 5]);
+        ctx.beginPath();
+        ctx.moveTo(gate + 0.5, H * 0.12);
+        ctx.lineTo(gate + 0.5, H * 0.88);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = SOFT;
+        for (const e of events) {
+          ctx.globalAlpha = 0.55;
+          ctx.beginPath();
+          ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        for (const rec of records) {
+          ctx.globalAlpha = rec.a;
+          ctx.fillStyle = GOLD;
+          ctx.beginPath();
+          ctx.arc(rec.x, rec.y, rec.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function step() {
+        if (Math.random() < 0.42) spawn();
+
+        for (let i = events.length - 1; i >= 0; i--) {
+          const e = events[i];
+          e.x += e.v;
+          if (e.x >= gate) {events.splice(i, 1); caught++;}
+        }
+
+        sinceClose++;
+        if (sinceClose > 150 && caught > 0) {
+          records.push({x: gate, y: H / 2, r: Math.min(3 + caught * 0.16, 6.5), a: 1});
+          caught = 0;
+          sinceClose = 0;
+        }
+
+        for (let i = records.length - 1; i >= 0; i--) {
+          const rec = records[i];
+          rec.x += 1.5;
+          if (rec.x > W * 0.9) rec.a -= 0.02;
+          if (rec.a <= 0) records.splice(i, 1);
+        }
+
+        draw();
+        requestAnimationFrame(step);
+      }
+
+      function init() {
+        resize();
+        seed();
+        if (reduce) {
+          records.push({x: W * 0.78, y: H / 2, r: 5.5, a: 1});
+          draw();
+        } else {
+          requestAnimationFrame(step);
+        }
+      }
+
+      let t;
+      window.addEventListener('resize', function () {
+        clearTimeout(t);
+        t = setTimeout(function () {resize(); if (reduce) draw();}, 150);
+      });
+
+      if (document.fonts && document.fonts.ready) {document.fonts.ready.then(init);}
+      else {init();}
+    })();
+  </script>
 
 </body>
 
